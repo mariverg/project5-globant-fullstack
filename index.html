@@ -8,12 +8,28 @@
 </head>
 <body>
     <header>
-        <h1>Image Gallery</h1>
-        <input type="text" id="search" placeholder="Search for photos...">
-        <button id="searchBtn">Search</button>
+        <div class="intro-text">
+            <h1>IMAGEN Gallery</h1>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search for photos...">
+            <button id="searchBtn">Search</button>
+            <button id="viewFavoritesBtn">View Favorites</button>
+        </div>
+
         <button id="loginBtn">Login with Unsplash</button>
     </header>
-    <section id="gallery"></section>
+
+    <!-- Aquí es donde se cargarán dinámicamente las imágenes -->
+    <section id="gallery" class="gallery"></section>
+    <section id="favorites" style="display: none;">
+        <h2>Favoritas</h2>
+        <button id="backToGalleryBtn">Back to Gallery</button> <!-- Botón para volver a la galería -->
+        <div class="gallery" id="favoritesGallery"></div>
+    </section>
+    
+
     <script src="app.js"></script>
 </body>
 </html>
