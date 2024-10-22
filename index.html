@@ -22,11 +22,17 @@
     </header>
 
     <!-- Aquí es donde se cargarán dinámicamente las imágenes -->
-    <section id="gallery" class="gallery"></section>
     <section id="favorites" style="display: none;">
-        <h2>Favoritas</h2>
-        <button id="backToGalleryBtn">Back to Gallery</button> <!-- Botón para volver a la galería -->
-        <div class="gallery" id="favoritesGallery"></div>
+        <h2>Favoritos</h2>
+        <button id="backToGalleryBtn">Volver a la Galería</button>
+        <div id="favoritesGallery" class="gallery"></div> <!-- Contenedor para las imágenes favoritas -->
+    </section>
+    
+    <section id="gallery">
+        <input type="text" id="search" placeholder="Buscar fotos...">
+        <button id="searchBtn">Buscar</button>
+        <button id="viewFavoritesBtn">Ver Favoritos</button>
+        <div class="gallery" id="gallery"></div> <!-- Contenedor de la galería principal -->
     </section>
     
 
