@@ -81,30 +81,57 @@ header {
 
 /* Galería estilo masonry (mampostería) */
 #gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Ajuste flexible de columnas */
-    grid-auto-rows: 10px; /* Base para ajustar la altura automática */
-    gap: 10px; /* Espaciado entre imágenes */
+    column-count: 3; /* Número de columnas que queremos para el diseño */
+    column-gap: 10px; /* Espaciado entre las columnas */
     width: 100%;
     max-width: 1200px;
     margin: 50px 0;
 }
 
 .gallery-item {
-    grid-row-end: span 30; /* Ajuste automático basado en el tamaño de la imagen */
+    break-inside: avoid; /* Evita que las imágenes se rompan en columnas */
+    margin-bottom: 10px;
     overflow: hidden;
     transition: transform 0.3s ease;
 }
 
 .gallery-item img {
     width: 100%;
-    height: auto; /* Fuerza a ocupar el contenedor */
-    object-fit: cover; /* Asegura que las imágenes se recorten proporcionalmente */
+    height: auto;
+    object-fit: cover;
     border-radius: 10px;
 }
+
 .gallery-item:hover img {
     transform: scale(1.05); /* Zoom suave al hacer hover */
 }
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    #gallery {
+        column-count: 1; /* Una columna para pantallas pequeñas */
+    }
+}
+
+/* Estilos para el ícono de favoritos */
+.gallery-item i {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* Hover para el ícono */
+.gallery-item i:hover {
+    color: #ff3f00;
+}
+
+/* Opcional: Ajustar la posición del ícono de corazón */
+.gallery-item {
+    position: relative;
+}
+
 
 
 .gallery-item h3 {
