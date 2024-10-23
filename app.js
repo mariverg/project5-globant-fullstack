@@ -11,7 +11,7 @@ window.onload = () => {
     displayFavorites(); // Mostrar las fotos favoritas guardadas al cargar
 };
 
-// Función para obtener imágenes de Unsplash
+//Función para obtener imágenes de Unsplash
 function fetchPhotos(query = '') {
     const url = query ? `${searchUrl}&query=${query}&client_id=${apiKey}` : `${apiUrl}&client_id=${apiKey}`;
     
@@ -23,7 +23,25 @@ function fetchPhotos(query = '') {
         })
         .catch(error => console.error('Error fetching photos:', error));
 }
-
+        function fetchPhotos(query = '') {
+            const accessToken = localStorage.getItem('access_token'); // Recupera el token de OAuth 2.0 si el usuario ha iniciado sesión
+            const url = query ? `${searchUrl}&query=${query}` : apiUrl;
+        
+            const headers = accessToken ? {
+                Authorization: `Bearer ${accessToken}` // Usa el token si el usuario está autenticado
+            } : {
+                Authorization: `Client-ID ${apiKey}` // Usa la apiKey para peticiones públicas si no está autenticado
+            };
+        
+            fetch(url, { headers })
+                .then(response => response.json())
+                .then(data => {
+                    photos = query ? data.results : data; // Guardar fotos globalmente
+                    displayPhotos(photos);
+                })
+                .catch(error => console.error('Error fetching photos:', error));
+        }
+        
 // Función para mostrar las imágenes en la galería principal
 function displayPhotos(photos) {
     gallery.innerHTML = ''; // Limpiar galería
@@ -35,19 +53,6 @@ function displayPhotos(photos) {
         const img = document.createElement('img');
         img.src = photo.urls.small;
         img.alt = photo.alt_description || 'Unsplash Image';
-
-       /*  const favBtn = document.createElement('button');
-        favBtn.textContent = isFavorite(photo.id) ? 'Remove from Favorites' : 'Add to Favorites';
-        favBtn.addEventListener('click', () => toggleFavorite(photo.id, favBtn));
-
-        // Añadir imagen, título y botón al contenedor
-        photoContainer.appendChild(img);
-        photoContainer.appendChild(favBtn);
-
-        // Añadir el contenedor a la galería
-        gallery.appendChild(photoContainer);
-    }); */
-
         // Crear ícono de corazón
         const favIcon = document.createElement('i');
         favIcon.classList.add('fa-heart', 'fa-2x', isFavorite(photo.id) ? 'fas' : 'far'); // fas es para el corazón lleno, far para vacío
@@ -84,23 +89,6 @@ function isFavorite(photoId) {
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     return favorites.includes(photoId);
 }
-
-/* // Función para alternar el estado de favorito de una imagen
-function toggleFavorite(photoId, button) {
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-
-    if (favorites.includes(photoId)) {
-        favorites = favorites.filter(id => id !== photoId);
-        button.textContent = 'Add to Favorites';
-        removeFavoriteFromGallery(photoId);
-    } else {
-        favorites.push(photoId);
-        button.textContent = 'Remove from Favorites';
-        addFavoriteToGallery(photoId);
-    }
-    
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-} */
 
     // Función para alternar el estado de favorito (corazón lleno o vacío)
 function toggleFavorite(photoId, icon) {
